@@ -1,4 +1,5 @@
 //import de express
+
 const express = require("express");
 const router = express.Router();
 const auth = require("../middleware/auth");
@@ -10,6 +11,7 @@ router.post("/signup", password, userController.signup);
 router.post("/login", userController.login);
 router.get("/:id", auth, userController.getOneUser);
 router.get("/all", auth, userController.getAllUsers);
+router.delete("/:id", auth, userController.deleteUser);
 
 //export du routeur
 module.exports = router;

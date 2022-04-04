@@ -1,9 +1,9 @@
 const { Sequelize } = require("sequelize");
 
 const sequelize = new Sequelize(
-  "Groupomania",
+  "groupomania",
   "root",
-  "Azhkd468(gdlzlqjgyUiojgklo1",
+  "12345678",
 
   {
     host: "localhost",

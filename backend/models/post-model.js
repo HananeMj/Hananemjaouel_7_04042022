@@ -12,15 +12,11 @@ const Post = sequelize.define(
       allowNull: false,
       primaryKey: true,
     },
-    title: {
-      type: DataTypes.STRING,
-      allowNull: false,
-    },
     content: {
       type: DataTypes.STRING,
       allowNull: false,
     },
-    attachments: {
+    file: {
       type: DataTypes.STRING,
       defaultValue: 0,
     },
@@ -47,7 +43,7 @@ const Post = sequelize.define(
 //comment.belongsTo(Post, { foreignKey: "post_id" });
 
 sequelize
-  .sync({})
+  .sync({ force: true })
   .then(() => {
     console.log("post-model synced successfully !");
   })

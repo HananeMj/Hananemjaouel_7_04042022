@@ -3,8 +3,15 @@ const express = require("express");
 const bodyParser = require("body-parser");
 const path = require("path");
 const sequelize = require("./config/db");
+const cors = require("cors");
 require("mysql2");
 require("dotenv").config();
+
+const corsOptions = {
+  origin: "http://localhost:3000",
+  credentials: true, //access-control-allow-credentials:true
+  optionSuccessStatus: 200,
+};
 
 //import routes
 const userRoute = require("./routes/user-routes");
@@ -35,6 +42,9 @@ app.use((req, res, next) => {
   );
   next();
 });
+
+app.use(cors());
+app.use(cors(corsOptions));
 app.use(bodyParser.json());
 
 /*app.use(

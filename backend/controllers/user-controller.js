@@ -72,19 +72,25 @@ exports.getAllUsers = (req, res) => {
     });
 };
 
+//retrouver un user
 exports.getOneUser = (req, res) => {
-  const token = req.headers.authorization.split(" ")[1];
-  const decodedToken = jwt.verify(token, "SECRET_TOKEN");
-  const userId = decodedToken.userId;
+  User.findOne({ where: { id: req.params.id } })
 
-  console.log(req.params);
-  if (!userId.isValid(req.params.id))
-    return res.status(400).send("id unknown !:" + req.params.id);
-  User.findById(req.params.id, (err, docs) => {
-    if (!err) res.send(docs);
-    else console.log("id unknown!:" + err);
-  })
+    .then((user) => {
+      res.status(200).json({ user });
+    })
 
-    .then((data) => res.status(200).json(data))
     .catch((error) => res.status(400).json({ message: error.message }));
+};
+
+//supprimer un user
+exports.deleteUser = (req, res) => {
+  User.destroy({ where: { id: req.params.id } })
+    .then((res) => {
+      res.status(200).json({ message: "Profil supprimé !" });
+    })
+    .catch((error) => {
+      console.log(error);
+      res.status(400).json({ message: "Utilisateur non trouvé !" });
+    });
 };

@@ -1,7 +1,7 @@
 const { Sequelize } = require("sequelize");
 const { DataTypes } = Sequelize;
 const sequelize = require("../config/db");
-const post = require("./Post.js");
+const post = require("./post-model");
 
 //creating a model for user
 const User = sequelize.define(
@@ -25,8 +25,8 @@ const User = sequelize.define(
       allowNull: false,
     },
     isAdmin: {
-      type: DataTypes.INTEGER,
-      defaultValue: 0,
+      type: DataTypes.BOOLEAN,
+      defaultValue: false,
     },
   },
   {
@@ -39,7 +39,12 @@ User.hasMany(post, {
   onDelete: "CASCADE",
   onUpdate: "CASCADE",
 });
-post.belongsTo(User, { foreignKey: "userId", allowNull: false });
+post.belongsTo(User, {
+  foreignKey: "userId",
+  allowNull: false,
+  onDelete: "CASCADE",
+  onUpdate: "CASCADE",
+});
 
 sequelize
   .sync({ force: true })
